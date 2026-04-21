@@ -24,6 +24,10 @@ export type EstadoMatricula =
   | MatriculaSuspendida
   | MatriculaFinalizada;
  
+
+  function agotado(valor: never): never {
+  throw new Error(`Estado no manejado: ${JSON.stringify(valor)}`);
+}
 // ── generarReporte ───────────────────────────────────────────
  
 export function generarReporte(estado: EstadoMatricula): string {
@@ -37,6 +41,11 @@ export function generarReporte(estado: EstadoMatricula): string {
       return `Matrícula suspendida. Motivo: ${estado.motivoSuspension}.`;
  
     case "FINALIZADA":
-      return `Matrícula finalizada. Nota media: ${estado.notaMedia.toFixed(2)}.`;
+     return `Matrícula finalizada. Nota media: ${estado.notaMedia.toFixed(2)}.`;
+  
+     default:
+      return agotado(estado);
+  
+  
   }
 }
